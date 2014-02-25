@@ -1,0 +1,83 @@
+			body {
+				overflow: hidden;
+				font-family: "Helvetica", Arial, Serif;
+				margin:0;
+				padding:0;
+				height:100%;
+			}
+
+			#wrapper {
+				min-height:100%;
+				position:relative;
+			}
+
+			#title {
+				padding: 10px;
+				margin-right: 5%;
+				margin-left: 5%;
+			}
+
+			#content {
+				margin-left: 5%;
+				margin-right: 5%;
+				padding: 10px;
+				padding-bottom: 80px;
+			}
+
+			#tweet-box {
+				width: 48%;
+				/*position: relative;
+				top: -543px;
+				left: 500px;*/
+				position: absolute;
+				top: 90px;
+				left: 570px;
+			}
+
+			#twitter-widget-0, #twitter-widget-1, #twitter-widget-2 {
+				margin-top: -10px;
+			}
+
+			#tweet-box-prabowo {
+				display: none;
+			}
+
+			#tweet-box-gita {
+				display: none;
+			}
+
+			#tweet-box-hatta {
+				display: none;
+			}
+
+			footer {
+				width:100%;
+				height:80px;
+				position:absolute;
+				bottom:-34px;
+				left:0;
+				background-color: #2d2d2d;
+				color: #fff;
+				/* padding-left: 10%;
+				padding-right: 10%; */
+			}
+
+			footer p {
+				font-size: 15px;
+				font-style: italic;
+				margin-top: 30px;
+				margin-left: 5%;
+				margin-right: 5%;
+			}
+
+			footer a {
+				color: #52AAFF;
+			}
+			p#status-camera {
+				font-size: 10px;
+			}
+
+			h2{
+				margin-bottom: -15px;
+				margin-top: 14px;
+			}
