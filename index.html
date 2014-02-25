@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>cARpres</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+		<meta charset="utf-8">
+		<style>
+			body {
+				background-color: #f0f0f0;
+				margin-left: 10%;
+				margin-right: 10%;
+				margin-top: 5%;
+				width: 40%;
+				overflow: hidden;
+				font-family: "Helvetica", Arial, Serif;
+				position: relative;
+			}
+
+			#title {
+				position: absolute;
+				top: -70px;
+			}
+
+			#title h4{
+				margin-top: -15px;
+			}
+
+			#tweet-box h5 {
+				position: absolute;
+				left: 500px;
+				top: -25px;
+				width: 100%;
+			}
+
+			#twitter-widget-0, #twitter-widget-1, #twitter-widget-2 {
+				position:absolute;
+				top: 20px;
+				left: 500px;
+			}
+
+			#tweet-box-prabowo {
+				display: none;
+			}
+
+			#tweet-box-gita {
+				display: none;
+			}
+
+			#tweet-box-hatta {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="title">
+			<h3>cARPres</h3>
+			<h4>Kalau Kamu Jadi Presiden</h4>
+		</div>
+		<script src="headtrackr.js"></script>
+		
+		<canvas id="compare" width="480" height="360" style="display:none"></canvas>
+		<video id="vid" autoplay loop width="480" height="360"></video>
+		<canvas id="overlay" width="480" height="360"></canvas>
+		<canvas id="debug" width="480" height="360"></canvas>
+		
+		<p id='gUMMessage'></p>
+		<p>Status : <span id='headtrackerMessage'></span></p>
+
+		<div id="pilh-presiden">
+			<p>Calon Presiden:</p>
+			<div id="button-presiden">
+				<img id="prabowo" src="prabowo.png" alt="Prabowo" width="50" height="63">
+				<img id="gita" src="gita.png" alt="Gita Wirjawan" width="50" height="63">
+				<img id="hatta" src="hatta.png" alt="Hatta Rajasa" width="50" height="63">
+			</div>
+		</div>
+
+		<div id="tweet-box">
+			<div id="tweet-box-prabowo">
+				<h5>Kata Twitter tentang Prabowo</h5>
+
+    			<a class="twitter-timeline"  href="https://twitter.com/search?q=prabowo+capres"  data-widget-id="437867767497121792" height="500">Tweets about "prabowo capres"</a>
+
+    			<script>
+    				!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    			</script>
+    		</div>
+
+    		<div id="tweet-box-gita">
+				<h5>Kata Twitter tentang Gita Wirjawan</h5>
+
+    			<a class="twitter-timeline"  href="https://twitter.com/search?q=gita+wirjawan+capres"  data-widget-id="438211601905098752">Tweets about "gita wirjawan capres"</a>
+
+    			<script>
+    				!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    			</script>
+    		</div>
+
+    		<div id="tweet-box-hatta">
+				<h5>Kata Twitter tentang Hatta Rajasa</h5>
+
+    			<a class="twitter-timeline"  href="https://twitter.com/search?q=hatta+rajasa+capres"  data-widget-id="438211949575151616">Tweets about "hatta rajasa capres"</a>
+    			
+    			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    			</script>
+    		</div>
+		</div>
+		<script>
+			// memilih capres, mengaktifkan foto dan tweet box
+			var img;
+			img=document.getElementById("prabowo");
+
+			document.getElementById("prabowo").onclick = function() {
+				img=document.getElementById("prabowo");
+				document.getElementById("tweet-box-prabowo").style.display = 'block';
+				document.getElementById("tweet-box-gita").style.display = 'none';
+				document.getElementById("tweet-box-hatta").style.display = 'none';
+			};
+
+			document.getElementById("gita").onclick = function() {
+				img=document.getElementById("gita");
+				document.getElementById("tweet-box-prabowo").style.display = 'none';
+				document.getElementById("tweet-box-gita").style.display = 'block';
+				document.getElementById("tweet-box-hatta").style.display = 'none';
+			};
+
+			document.getElementById("hatta").onclick = function() {
+				img=document.getElementById("hatta");
+				document.getElementById("tweet-box-prabowo").style.display = 'none';
+				document.getElementById("tweet-box-gita").style.display = 'none';
+				document.getElementById("tweet-box-hatta").style.display = 'block';
+			};
+
+		  	// set up video and canvas elements needed
+		
+			var videoInput = document.getElementById('vid');
+			var canvasInput = document.getElementById('compare');
+			var canvasOverlay = document.getElementById('overlay')
+			var debugOverlay = document.getElementById('debug');
+			var overlayContext = canvasOverlay.getContext('2d');
+			canvasOverlay.style.position = "absolute";
+			canvasOverlay.style.top = '0px';
+			canvasOverlay.style.zIndex = '100001';
+			canvasOverlay.style.display = 'block';
+			debugOverlay.style.position = "absolute";
+			debugOverlay.style.top = '0px';
+			debugOverlay.style.zIndex = '100002';
+			debugOverlay.style.display = 'none';
+			
+			// add some custom messaging
+			
+			statusMessages = {
+				"whitebalance" : "checking for stability of camera whitebalance",
+				"detecting" : "Detecting face",
+				"hints" : "Hmm. Detecting the face is taking a long time",
+				"redetecting" : "Lost track of face, redetecting",
+				"lost" : "Lost track of face",
+				"found" : "Tracking face"
+			};
+			
+			supportMessages = {
+				"no getUserMedia" : "Unfortunately, <a href='http://dev.w3.org/2011/webrtc/editor/getusermedia.html'>getUserMedia</a> is not supported in your browser. Try <a href='http://www.opera.com/browser/'>downloading Opera 12</a> or <a href='http://caniuse.com/stream'>another browser that supports getUserMedia</a>. Now using fallback video for facedetection.",
+				"no camera" : "No camera found. Using fallback video for facedetection."
+			};
+			
+			document.addEventListener("headtrackrStatus", function(event) {
+				if (event.status in supportMessages) {
+					var messagep = document.getElementById('gUMMessage');
+					messagep.innerHTML = supportMessages[event.status];
+				} else if (event.status in statusMessages) {
+					var messagep = document.getElementById('headtrackerMessage');
+					messagep.innerHTML = statusMessages[event.status];
+				}
+			}, true);
+			
+			// the face tracking setup
+			
+			var htracker = new headtrackr.Tracker({altVideo : {ogv : "./media/capture5.ogv", mp4 : "./media/capture5.mp4"}, calcAngles : true, ui : false, headPosition : false, debug : debugOverlay});
+			htracker.init(videoInput, canvasInput);
+			htracker.start();
+			
+			// gambar wajah capres di atas setiap wajah yang ditemukan
+			
+			document.addEventListener("facetrackingEvent", function( event ) {
+				// clear canvas
+				overlayContext.clearRect(0,0,480,360);
+				// gambar wajah capres 
+				if (event.detection == "CS") {
+					overlayContext.translate(event.x, event.y)
+					overlayContext.rotate(event.angle-(Math.PI/2));
+					overlayContext.drawImage(img, 1.2*((-(event.width/2)) >> 0), 1.2*((-(event.height/2)) >> 0), 1.2*event.width, 1.512*event.width);
+					overlayContext.rotate((Math.PI/2)-event.angle);
+					overlayContext.translate(-event.x, -event.y);
+				}
+			});
+		</script>
+	</body>
+</html>
